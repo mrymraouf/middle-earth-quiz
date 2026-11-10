@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS participants (
   question_ids JSONB NOT NULL
 )`);
 
+app.set("trust proxy", 1);
+
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.json({ limit: "20kb" }));
 app.use(session({
