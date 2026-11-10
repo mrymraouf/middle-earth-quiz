@@ -30,6 +30,6 @@ services:
           name: middle-earth-quiz-db
           property: connectionString
       - key: ADMIN_PASSWORD
-        sync: false
+        generateValue: true
       - key: SESSION_SECRET
         generateValue: true
