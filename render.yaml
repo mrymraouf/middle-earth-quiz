@@ -11,7 +11,17 @@ services:
     runtime: node
     plan: free
     region: frankfurt
-    buildCommand: npm install
+    buildCommand: >-
+      mkdir -p /tmp/quiz-src &&
+      unzip -oq middle_earth_quiz_project_v2_balanced.zip -d /tmp/quiz-src &&
+      SRC="$(find /tmp/quiz-src -type f -name questions.json -print -quit)" &&
+      test -n "$SRC" &&
+      cp "$SRC" ./questions.json &&
+      PUB="$(dirname "$SRC")/public" &&
+      test -d "$PUB" &&
+      rm -rf ./public &&
+      cp -R "$PUB" ./public &&
+      npm install
     startCommand: npm start
     healthCheckPath: /health
     envVars:
