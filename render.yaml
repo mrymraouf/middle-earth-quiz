@@ -1,0 +1,25 @@
+databases:
+  - name: middle-earth-quiz-db
+    plan: free
+    region: frankfurt
+    databaseName: middle_earth_quiz_db
+    user: middle_earth_quiz_db_user
+
+services:
+  - type: web
+    name: middle-earth-quiz
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: middle-earth-quiz-db
+          property: connectionString
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
